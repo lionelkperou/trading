@@ -1,0 +1,199 @@
+<!-- templates/result.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparaison de stratégies de trading</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <nav class="bg-blue-400 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-white text-lg font-bold">comparateur de strategies de trading</a>
+            <button id="menu-toggle" class="text-white md:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <ul id="mobile-menu" class="hidden md:flex md:space-x-6 md:ml-4">
+                <li><a href="/" class="text-white hover:text-gray-300">Accueil</a></li>
+                <li><a href="apropos" class="text-white hover:text-gray-300">A propos</a></li>
+                <li><a href="recommandations" class="text-white hover:text-gray-300">Recommandations</a></li>
+                <li><a href="avertissement" class="text-white hover:text-gray-300">Avertissement</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+{% block content %}
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h2 class="text-xl font-bold mb-4">Résultats pour {{ symbol }}</h2>
+    
+    <div id="chart" class="w-full h-[600px] mb-8"></div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div class="bg-blue-100 p-4 rounded">
+            <h3 class="font-bold text-lg mb-2">Bandes de Bollinger</h3>
+            <p>Rendement cumulé: {{ bb_return }}%</p>
+            <p>Ratio de Sharpe: {{ performance_metrics.bb_sharpe }}</p>
+            <p>Drawdown maximal: {{ performance_metrics.bb_max_drawdown }}%</p>
+        </div>
+        <div class="bg-green-100 p-4 rounded">
+            <h3 class="font-bold text-lg mb-2">Croisement des moyennes mobiles</h3>
+            <p>Rendement cumulé: {{ ma_return }}%</p>
+            <p>Ratio de Sharpe: {{ performance_metrics.ma_sharpe }}</p>
+            <p>Drawdown maximal: {{ performance_metrics.ma_max_drawdown }}%</p>
+        </div>
+    </div>
+    
+    <div class="bg-yellow-100 p-4 rounded mb-8">
+        <h3 class="font-bold text-lg mb-2">Comparaison des performances</h3>
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th class="text-left">Métrique</th>
+                    <th class="text-left">Bandes de Bollinger</th>
+                    <th class="text-left">Croisement des moyennes mobiles</th>
+                    <th class="text-left">Meilleure stratégie</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Rendement cumulé</td>
+                    <td>{{ bb_return }}%</td>
+                    <td>{{ ma_return }}%</td>
+                    <td>
+                        {% if bb_return != "N/A" and ma_return != "N/A" %}
+                            {% if bb_return > ma_return %}
+                                Bandes de Bollinger
+                            {% elif ma_return > bb_return %}
+                                Croisement des moyennes mobiles
+                            {% else %}
+                                Égalité
+                            {% endif %}
+                        {% else %}
+                            Impossible de déterminer
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ratio de Sharpe</td>
+                    <td>{{ performance_metrics.bb_sharpe }}</td>
+                    <td>{{ performance_metrics.ma_sharpe }}</td>
+                    <td>
+                        {% if performance_metrics.bb_sharpe != "N/A" and performance_metrics.ma_sharpe != "N/A" %}
+                            {% if performance_metrics.bb_sharpe > performance_metrics.ma_sharpe %}
+                                Bandes de Bollinger
+                            {% elif performance_metrics.ma_sharpe > performance_metrics.bb_sharpe %}
+                                Croisement des moyennes mobiles
+                            {% else %}
+                                Égalité
+                            {% endif %}
+                        {% else %}
+                            Impossible de déterminer
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Drawdown maximal</td>
+                    <td>{{ performance_metrics.bb_max_drawdown }}%</td>
+                    <td>{{ performance_metrics.ma_max_drawdown }}%</td>
+                    <td>
+                        {% if performance_metrics.bb_max_drawdown != "N/A" and performance_metrics.ma_max_drawdown != "N/A" %}
+                            {% if performance_metrics.bb_max_drawdown < performance_metrics.ma_max_drawdown %}
+                                Bandes de Bollinger
+                            {% elif performance_metrics.ma_max_drawdown < performance_metrics.bb_max_drawdown %}
+                                Croisement des moyennes mobiles
+                            {% else %}
+                                Égalité
+                            {% endif %}
+                        {% else %}
+                            Impossible de déterminer
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="bg-purple-100 p-4 rounded mb-8">
+        <h3 class="font-bold text-lg mb-2">Recommandations</h3>
+        <p class="mb-2"><strong>Stratégie recommandée :</strong> 
+            {% if overall_best_strategy %}
+                {{ overall_best_strategy }}
+            {% else %}
+                Impossible de déterminer
+            {% endif %}
+        </p>
+        <p class="mb-2"><strong>Justification :</strong> {{ strategy_justification }}</p>
+        <p class="mb-2"><strong>Considérations de risque :</strong> {{ risk_considerations }}</p>
+        <p><strong>Remarque :</strong> Ces recommandations sont basées sur des données historiques et ne garantissent pas les performances futures. Veuillez toujours faire vos propres recherches et consulter un conseiller financier avant de prendre des décisions d'investissement.</p>
+    </div>
+    
+    <div class="mt-8">
+        <a href="/" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Retour à la page précedente
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const chartData = {{ chart_data|safe }};
+</script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}
+
+<footer class="bg-gray-700 text-gray-300 py-8 mt-8">
+    <div class="container mx-auto text-center md:text-left">
+        <div class="flex flex-col md:flex-row justify-around items-center md:items-start space-y-6 md:space-y-0">
+            <!-- Logo et description -->
+            <div class="text-center md:text-left">
+                <h2 class="text-lg font-semibold">Comparateur de stratégies de trading</h2>
+                <p class="text-gray-400 mt-2">Les performances passées ne garantissent pas les résultats futurs.</li>
+                    <li>Vous pourriez perdre une partie ou la totalité de votre capital initial.</li>
+                    <li>Les marchés peuvent être volatils et imprévisibles.</li>
+                    <li>Le trading avec effet de levier peut amplifier les gains, mais aussi les pertes.</li></p>
+            </div>
+
+            <!-- Liens rapides -->
+            <div class="space-y-2">
+                <h3 class="font-semibold">Liens rapides</h3>
+                <ul class="text-gray-400 space-y-1">
+                    <li><a href="accueil" class="hover:text-gray-100">Accueil</a></li>
+                    <li><a href="avertissement" class="hover:text-gray-100">Avertissement</a></li>
+                    <li><a href="recommandations" class="hover:text-gray-100">Recommandations</a></li>
+                    <li><a href="donnees" class="hover:text-gray-100">Donnée</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact et réseaux sociaux -->
+            <div class="text-center md:text-left">
+                <h3 class="font-semibold">Nous contacter</h3>
+                <p class="text-gray-400 mt-2">Email : lionelkperou@gmail</p>
+                <div class="flex justify-center md:justify-start space-x-4 mt-4">
+                    <a href="#" class="hover:text-gray-100"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-gray-100"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-gray-100"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 border-t border-gray-600 pt-4 text-gray-500 text-sm text-center">
+            &copy; 2024 Comparateur de stratégies de trading. Tous droits réservés.
+        </div>
+    </div>
+</footer>
+
+
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+</body>
+</html>

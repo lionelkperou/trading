@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparateur de Stratégies de Trading</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Animation pour le texte filant */
+        .scrolling-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll 15s linear infinite;
+        }
+
+        /* Animation CSS pour faire défiler le texte de droite à gauche */
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+  <!-- Navbar filante -->
+  <div class="bg-blue-300 text-gray-800 p-4 overflow-hidden">
+    <div class="container mx-auto">
+        <div class="scrolling-text text-center text-lg font-semibold">
+            Bienvenue sur le Comparateur de stratégies de trading - Consultez les performances des stratégies de trading comme les Bandes de Bollinger et le Double Croisement de Moyennes Mobiles pour optimiser vos investissements !
+        </div>
+    </div>
+</div>
+
+<header class="bg-white shadow-md py-10">
+    <div class="container mx-auto text-center">
+        <h1 class="text-3xl font-bold text-gray-800">Bienvenue sur le Comparateur de Stratégies de Trading</h1>
+        <p class="text-gray-600 mt-4">Optimisez vos investissements avec des analyses détaillées et des recommandations.</p>
+        <a href="index" class="mt-6 inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Commencer</a>
+    </div>
+</header>
+
+<section class="container mx-auto py-12">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Pourquoi choisir notre plateforme ?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="font-bold text-lg text-gray-800 mb-2">Analyses Précises</h3>
+            <p class="text-gray-600">Utilisez nos outils pour obtenir des analyses précises et fiables des stratégies de trading.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="font-bold text-lg text-gray-800 mb-2">Recommandations Personnalisées</h3>
+            <p class="text-gray-600">Recevez des conseils personnalisés basés sur vos préférences et votre profil de risque.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="font-bold text-lg text-gray-800 mb-2">Données Actualisées</h3>
+            <p class="text-gray-600">Accédez à des données de marché actualisées pour prendre des décisions éclairées.</p>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-gray-700 text-gray-300 py-8">
+    <div class="container mx-auto text-center">
+        <p>&copy; 2024 Comparateur de Stratégies de Trading. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommandations personnalisées</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-blue-400 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-white text-lg font-bold">comparateur de strategies de trading</a>
+            <button id="menu-toggle" class="text-white md:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <ul id="mobile-menu" class="hidden md:flex md:space-x-6 md:ml-4">
+                <li><a href="/" class="text-white hover:text-gray-300">Accueil</a></li>
+                <li><a href="apropos" class="text-white hover:text-gray-300">A propos</a></li>
+                <li><a href="recommandations" class="text-white hover:text-gray-300">Recommandations</a></li>
+                <li><a href="avertissement" class="text-white hover:text-gray-300">Avertissement</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="container mx-auto mt-8 p-4 bg-white rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-center mb-6">Recommandations personnalisées</h2>
+        <p class="text-center text-gray-600 mb-6">
+            Répondez à ce questionnaire pour recevoir des recommandations adaptées à vos objectifs et votre profil d'investissement.
+        </p>
+
+        <form class="space-y-6" action="/recommandations" method="POST">
+            <!-- Tolérance au risque -->
+            <div>
+                <label class="block text-lg font-semibold mb-2" for="riskTolerance">Quelle est votre tolérance au risque ?</label>
+                <select id="riskTolerance" name="riskTolerance" class="w-full border-gray-300 rounded-md">
+                    <option value="low">Faible (je privilégie la sécurité)</option>
+                    <option value="medium">Modérée (je suis prêt à prendre des risques raisonnables)</option>
+                    <option value="high">Élevée (je peux tolérer des pertes importantes pour des gains élevés)</option>
+                </select>
+            </div>
+
+            <!-- Préférences d'investissement -->
+            <div>
+                <label class="block text-lg font-semibold mb-2" for="investmentPreference">Préférez-vous des investissements à court ou long terme ?</label>
+                <select id="investmentPreference" name="investmentPreference" class="w-full border-gray-300 rounded-md">
+                    <option value="shortTerm">Court terme (quelques semaines ou mois)</option>
+                    <option value="longTerm">Long terme (plusieurs années)</option>
+                </select>
+            </div>
+
+            <!-- Capital disponible -->
+            <div>
+                <label class="block text-lg font-semibold mb-2" for="capital">Quel est le capital que vous souhaitez investir($) ?</label>
+                <input type="number" id="capital" name="capital" class="w-full border-gray-300 rounded-md" placeholder="Entrez un montant ">
+            </div>
+
+            <!-- Soumettre -->
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
+                Obtenir mes recommandations
+            </button>
+        </form>
+    </main>
+
+    <!-- Footer -->
+   
+<footer class="bg-gray-700 text-gray-300 py-8 mt-8">
+    <div class="container mx-auto text-center md:text-left">
+        <div class="flex flex-col md:flex-row justify-around items-center md:items-start space-y-6 md:space-y-0">
+            <!-- Logo et description -->
+            <div class="text-center md:text-left">
+                <h2 class="text-lg font-semibold">Comparateur de stratégies de trading</h2>
+                <p class="text-gray-400 mt-2">Les performances passées ne garantissent pas les résultats futurs.</li>
+                    <li>Vous pourriez perdre une partie ou la totalité de votre capital initial.</li>
+                    <li>Les marchés peuvent être volatils et imprévisibles.</li>
+                    <li>Le trading avec effet de levier peut amplifier les gains, mais aussi les pertes.</li></p>
+            </div>
+
+            <!-- Liens rapides -->
+            <div class="space-y-2">
+                <h3 class="font-semibold">Liens rapides</h3>
+                <ul class="text-gray-400 space-y-1">
+                    <li><a href="accueil" class="hover:text-gray-100">Accueil</a></li>
+                    <li><a href="avertissement" class="hover:text-gray-100">Avertissement</a></li>
+                    <li><a href="recommandations" class="hover:text-gray-100">Recommandations</a></li>
+                    <li><a href="donnees" class="hover:text-gray-100">Donnée</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact et réseaux sociaux -->
+            <div class="text-center md:text-left">
+                <h3 class="font-semibold">Nous contacter</h3>
+                <p class="text-gray-400 mt-2">Email : lionelkperou@gmail</p>
+                <div class="flex justify-center md:justify-start space-x-4 mt-4">
+                    <a href="#" class="hover:text-gray-100"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-gray-100"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-gray-100"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 border-t border-gray-600 pt-4 text-gray-500 text-sm text-center">
+            &copy; 2024 Comparateur de stratégies de trading. Tous droits réservés.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h2 class="text-xl font-bold mb-4">Choisissez une méthode pour entrer les données</h2>
+    
+    <div class="mb-8">
+        <h3 class="text-lg font-semibold mb-4">Option 1: Sélectionnez un symbole d'action</h3>
+        <form method="POST" id="symbolForm" class="space-y-4">
+            <div>
+                <label for="symbol" class="block text-gray-700 text-sm font-bold mb-2">Symbole de l'action :</label>
+                <select id="symbol" name="symbol" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="">Choisissez un symbole</option>
+                    {% for symbol in symbols %}
+                    <option value="{{ symbol }}">{{ symbol }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div>
+                <label for="start_date" class="block text-gray-700 text-sm font-bold mb-2">Date de début :</label>
+                <input type="date" id="start_date" name="start_date" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            
+            <div>
+                <label for="end_date" class="block text-gray-700 text-sm font-bold mb-2">Date de fin :</label>
+                <input type="date" id="end_date" name="end_date" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            
+            <div>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Appliquer les strategies avec symbole
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <h3 class="text-lg font-semibold mb-4">Option 2: Uploadez votre propre fichier</h3>
+        <form method="POST" enctype="multipart/form-data" id="fileForm" class="space-y-4">
+            <div>
+                <label for="file" class="block text-gray-700 text-sm font-bold mb-2">Uploadez votre fichier (CSV ou XLSX) :</label>
+                <input type="file" id="file" name="file" accept=".csv,.xlsx" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            
+            <div>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Appliquer les strategies avec fichier
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
